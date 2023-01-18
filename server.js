@@ -80,7 +80,7 @@ app.get('/objects/seed', (req, res) => {
         })
 })
 
-//index routes
+// GET index routes
 app.get('/objects', (req, res) => {
     Object.find({})
         .then(objects => { res.json({ objects: objects })})
@@ -128,7 +128,7 @@ app.delete('/objects/:id', (req, res) => {
 })
 
 
-// Show
+// GET Show
 app.get('/objects/:id', (req, res) => {
 
     const id = req.params.id
