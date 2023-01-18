@@ -4,12 +4,14 @@ const mongoose = require('mongoose')
 const morgan = require('morgan') 
 require('dotenv').config() 
 const path = require('path') 
+const port = 3000
 
 // import model
-const Object = require('./models/fruit')
+const Object = require('./models/object')
 
 // database connection
-const DATABASE_URL = process.env.DATABASE_URL
+// const DATABASE_URL = process.env.DATABASE_URL
+DATABASE_URL='mongodb://localhost/museum-rest-api'
 
 // config
 const CONFIG = {
@@ -20,6 +22,7 @@ const CONFIG = {
 // connect to db
 mongoose.connect(DATABASE_URL, CONFIG)
 
+
 mongoose.connection
     .on('open', () => console.log('Connected to Mongoose'))
     .on('close', () => console.log('Disconected from Mongoose'))
@@ -28,20 +31,52 @@ mongoose.connection
 // express app object
 const app = express()
 
-app.use(morgan('tiny')) // request logging
-app.use(express.urlencoded({ extended: true })) // parses urlEncoded request bodies
-app.use(express.static('public')) // serves static assets from the public folder
+// app.use(morgan('tiny')) // request logging
+// app.use(express.urlencoded({ extended: true })) // parses urlEncoded request bodies
+// app.use(express.static('public')) // serves static assets from the public folder
+// app.use(express.json()) // parses incoming request payloads with JSON
+
+app.use(morgan('tiny')) // this is for request loggging, the 'tiny' argument declares what size of morgan log to use
+app.use(express.urlencoded({ extended: true })) // this parses urlEncoded request bodies(useful for POST and PUT requests)
+app.use(express.static('public')) // this serves static files from the 'public' folder
 app.use(express.json()) // parses incoming request payloads with JSON
+
+process.on('uncaughtException', function (err) {
+    console.log(err);
+});
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  })
+
+// app.get('/', (req, res) => {
+//     res.send('Hello World!')
+//   })
 
 // Routes
 app.get('/', (req, res) => {
     res.send('Server is live, ready for requests.')
 })
 
+
 // seed data
 app.get('/objects/seed', (req, res) => {
 
     const startObjects = [
-        { title: 'Terracotta conical rhyton (ritual vessel)', description: 'With fern pattern in red and black.', period: 'Late Minoan IA', date: 'ca. 1600–1525 BCE', culture: 'Minoan', medium: 'Terracotta; Fine painted ware, Floral style', classification: 'Vases', image: 'https://collectionapi.metmuseum.org/api/collection/v1/iiif/256787/532568/main-image' }
+        { title: 'Terracotta conical rhyton (ritual vessel)', description: 'With fern pattern in red and black.', period: 'Late Minoan IA', date: 'ca. 1600–1525 BCE', culture: 'Minoan', medium: 'Terracotta; Fine painted ware, Floral style', classification: 'Vases', image: 'https://collectionapi.metmuseum.org/api/collection/v1/iiif/256787/532568/main-image' },
+        { title: 'Terracotta larnax (chest-shaped coffin)', description: 'The larnax was the standard type of coffin in Crete from the early fourteenth century to the twelfth century B.C. The structure with recessed panels on each side suggests a wooden prototype, and recent scholarship has identified Egyptian chests as the probable models. The decoration on each side consists of geometric and vegetal ornaments well represented on contemporary pottery. The larnax stands at the beginning of an impressive series of large-scale funerary monuments in the Greek and Roman collection.', period: 'Late Minoan IIIB', date: 'mid-13th century BCE', culture: 'Minoan', medium: 'Terracotta', classification: 'Terracottas', image: 'https://collectionapi.metmuseum.org/api/collection/v1/iiif/256844/538397/main-image'},
+        { title: "Terracotta vase in the form of a bull's head", description: "This vase is a type of rhyton, or libation vase. The offering was poured through the hole in the animal's muzzle. The vase was filled either by immersion in a large container or through the hole on the head. Using the principle of the siphon, liquid would not flow out as long as the opening at the top was closed with the thumb.", period: 'Late Minoan II', date: 'ca. 1450–1400 BCE', culture: ' Minoan', medium: 'Terracotta', classification: 'Vases', image: 'https://collectionapi.metmuseum.org/api/collection/v1/iiif/255506/543530/main-image'},
+        // { title: 'test', description: '', period: '', date: '', culture: '', medium: '', classification: '', image: ''},
     ]
+
+    Object.deleteMany({})
+        .then(() => {
+            Object.create(startObjects)
+                .then(data => {
+                    res.json(data)
+                })
+                .catch(err => console.log('The following error occured: \n', err))
+
+        })
 })
+
