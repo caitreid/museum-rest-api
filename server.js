@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const morgan = require('morgan') 
 require('dotenv').config() 
 const path = require('path') 
-const port = 3000
+// const port = 3000
 
 // import model
 const Object = require('./models/object')
@@ -45,9 +45,9 @@ process.on('uncaughtException', function (err) {
     console.log(err);
 });
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-  })
+// app.listen(port, () => {
+//     console.log(`Example app listening on port ${port}`)
+//   })
 
 // app.get('/', (req, res) => {
 //     res.send('Hello World!')
@@ -113,3 +113,29 @@ app.put('/objects/:id', (req, res) => {
         })
         .catch(err => console.log(err))
 })
+
+
+// Delete
+app.delete('/objects/:id', (req, res) => {
+
+    const id = req.params.id
+
+    Object.findByIdAndRemove(id)
+        .then( () => {
+            res.sendStatus(204)
+        })
+        .catch(err => console.log(err))
+})
+
+
+
+
+
+
+
+
+
+const PORT = process.env.PORT
+app.listen(PORT, () => console.log(`Now listening to the sweet sounds of port: ${PORT}`))
+
+// END
