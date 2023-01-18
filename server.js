@@ -128,7 +128,17 @@ app.delete('/objects/:id', (req, res) => {
 })
 
 
+// Show
+app.get('/objects/:id', (req, res) => {
 
+    const id = req.params.id
+
+    Object.findById(id)
+        .then(object => {
+            res.json({ object: object})
+        })
+        .catch(err => console.log(err))
+})
 
 
 
