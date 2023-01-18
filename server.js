@@ -80,3 +80,9 @@ app.get('/objects/seed', (req, res) => {
         })
 })
 
+app.get('/objects', (req, res) => {
+    Object.find({})
+        .then(objects => { res.json({ objects: objects })})
+        .catch(err => console.log('The following error occurred: \n', err))
+})
+
