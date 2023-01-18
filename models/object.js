@@ -37,7 +37,11 @@ const objectSchema = new Schema({
     image: {
         type: String,
         required: false
-    }
+    },
+    onView: {
+        type: Boolean,
+        required: true,
+    },
 })
 
 const Object = model('Object', objectSchema)
