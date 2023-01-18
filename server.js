@@ -98,3 +98,18 @@ app.post('/objects', (req, res) => {
         })
         .catch(err => console.log(err))
 })
+
+// PUT route
+app.put('/objects/:id', (req, res) => {
+
+    const id = req.params.id
+    const updatedObject = req.body
+
+    Object.findByIdAndUpdate(id, updatedObject, { new: true })
+        .then(object => {
+            console.log('the newly updated object', object)
+
+            res.sendStatus(204)
+        })
+        .catch(err => console.log(err))
+})
