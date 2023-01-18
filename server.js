@@ -80,9 +80,21 @@ app.get('/objects/seed', (req, res) => {
         })
 })
 
+//index routes
 app.get('/objects', (req, res) => {
     Object.find({})
         .then(objects => { res.json({ objects: objects })})
         .catch(err => console.log('The following error occurred: \n', err))
 })
 
+// create route
+app.post('/objects', (req, res) => {
+    
+    const newObject = req.body
+    
+    Object.create(newObject)
+        .then(object => {
+            res.status(201).json({ object: object.toObject() })
+        })
+        .catch(err => console.log(err))
+})
