@@ -1,4 +1,6 @@
+/////////////////////////////////////
 //// Import Dependencies         ////
+/////////////////////////////////////
 const express = require('express')
 const Object = require('../models/object')
 
@@ -15,7 +17,7 @@ const router = express.Router()
 
 // This also means, that when we make a subdocument, we must MUST refer to the parent so that mongoose knows where in mongodb to store this subdocument
 
-// POST -> `/comments/<someObjectId>`
+// POST -> `/comments/<someobjectId>`
 // only loggedin users can post comments
 // bc we have to refer to a object, we'll do that in the simplest way via the route
 router.post('/:objectId', (req, res) => {
@@ -25,11 +27,11 @@ router.post('/:objectId', (req, res) => {
     console.log('this is the session\n', req.session)
     if (req.session.loggedIn) {
         // if logged in, make the logged in user the author of the comment
-        // this is exactly like how we added the owner to our Objects
+        // this is exactly like how we added the owner to our objects
         req.body.author = req.session.userId
         // saves the req.body to a variable for easy reference later
         const theComment = req.body
-        // find a specific Object
+        // find a specific object
         Object.findById(objectId)
             .then(object => {
                 // create the comment(with a req.body)
@@ -39,15 +41,18 @@ router.post('/:objectId', (req, res) => {
             })
             // respond with a 201 and the object itself
             .then(object => {
-                res.status(201).json({ object: object })
+                // res.status(201).json({ object: object })
+                res.redirect(`/objects/${object.id}`)
             })
             // catch and handle any errors
             .catch(err => {
                 console.log(err)
-                res.status(400).json(err)
+                // res.status(400).json(err)
+                res.redirect(`/error?error=${err}`)
             })
     } else {
-        res.sendStatus(401) //send a 401-unauthorized
+        // res.sendStatus(401) //send a 401-unauthorized
+        res.redirect(`/error?error=You%20Are%20not%20allowed%20to%20comment%20on%20this%20object`)
     }
 })
 
@@ -71,19 +76,23 @@ router.delete('/delete/:objectId/:commId', (req, res) => {
                     // we can use another built in method - remove()
                     theComment.remove()
                     object.save()
-                    res.sendStatus(204) //send 204 no content
+                    // res.sendStatus(204) //send 204 no content
+                    res.redirect(`/objects/${object.id}`)
                 } else {
                     // otherwise send a 401 - unauthorized status
-                    res.sendStatus(401)
+                    // res.sendStatus(401)
+                    res.redirect(`/error?error=You%20Are%20not%20allowed%20to%20delete%20this%20comment`)
                 }
             } else {
                 // otherwise send a 401 - unauthorized status
-                res.sendStatus(401)
+                // res.sendStatus(401)
+                res.redirect(`/error?error=You%20Are%20not%20allowed%20to%20delete%20this%20comment`)
             }
         })
         .catch(err => {
             console.log(err)
-            res.status(400).json(err)
+            // res.status(400).json(err)
+            res.redirect(`/error?error=${err}`)
         })
 })
 

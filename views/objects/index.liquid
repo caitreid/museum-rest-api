@@ -1,19 +1,32 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-
-
+    <!-- we need to account for two conditions here -->
+    <!-- first, if we have objects in our array -->
+    <!-- second, if there are no objects in the array -->
     {% if objects.length > 0 %}
-        <h2>All Objects</h2>
-        <ul>
-            {% for object in objects %}
-                <li>
-                    {{ object.name }}
-                </li>
-            {% endfor %}
-        </ul>
-
+        <div class="container-md">
+            <h2>All objects</h2>
+            <div class="row">
+                {% for object in objects %}
+                    <div class="card me-3 mb-3" style="width: 18rem;">
+                        <h5 class="card-header">{{object.name}}</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {% if object.readyToEat %}
+                                    Ripe
+                                {% else %}
+                                    Not Ripe
+                                {% endif %}
+                            </h5>
+                            <a href="/objects/{{object.id}}" class="btn btn-info">View {{object.name}}</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     {% else %}
-        <h2>No objects yet... go create some.</h2>
+        <div class="container-md">
+            <h2>No objects yet... Go create some!</h2>
+        </div>
     {% endif %}
-
 {% endblock %}

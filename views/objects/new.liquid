@@ -1,0 +1,28 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+    <div class="container-sm">
+        <form action="/objects" method="POST">
+            <fieldset>
+                <legend>Create New object</legend>
+                <label class="form-label">Name:</label>
+                <input 
+                    type="text" class="form-control" 
+                    name="name" placeholder="What kind of object is it?"
+                    required
+                >
+                <label class="form-label">Color:</label>
+                <input 
+                    type="color" class="form-control" 
+                    name="color" placeholder="What color is the object?"
+                    required
+                >
+                <label class="form-label">Ready to Eat:</label>
+                <input 
+                    type="checkbox" class="form-check-control" 
+                    name="readyToEat"
+                >
+            </fieldset>
+            <input type="submit" class="btn btn-success" value="Create New object">
+        </form>
+    </div>
+{% endblock %}
