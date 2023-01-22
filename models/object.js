@@ -1,5 +1,6 @@
 // import mongoose
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
+const mongoose = require('../utils/connection')
 
 // destructure Schema and model
 const { Schema, model } = mongoose
