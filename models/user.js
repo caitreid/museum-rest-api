@@ -1,5 +1,4 @@
-// const mongoose = require('../utils/connection')
-const mongoose = require('mongoose')
+const mongoose = require('../utils/connection')
 
 // destructuring the Schema and model functions from mongoose
 const { Schema, model } = mongoose

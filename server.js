@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/objects', ObjectRouter)
-// app.use('/users', UserRouter)
+app.use('/users', UserRouter)
 
 
 
