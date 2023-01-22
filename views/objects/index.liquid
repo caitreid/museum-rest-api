@@ -1,0 +1,19 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+
+
+    {% if objects.length > 0 %}
+        <h2>All Objects</h2>
+        <ul>
+            {% for object in objects %}
+                <li>
+                    {{ object.name }}
+                </li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <h2>No objects yet... go create some.</h2>
+    {% endif %}
+
+{% endblock %}

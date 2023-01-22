@@ -2,6 +2,8 @@
 // const mongoose = require('mongoose')
 const mongoose = require('../utils/connection')
 
+const commentSchema = require('./comment')
+
 // destructure Schema and model
 const { Schema, model } = mongoose
 
@@ -17,23 +19,23 @@ const objectSchema = new Schema({
     },
     period: {
         type: String,
-        required: true,
+        required: false,
     },
     date: {
         type: String,
-        required: true,
+        required: false,
     },
     culture: {
         type: String,
-        required: true
+        required: false
     },
     medium: {
         type: String,
-        required: true
+        required: false
     },
     classification: {
         type: String,
-        required: true
+        required: false
     },
     image: {
         type: String,
@@ -41,9 +43,18 @@ const objectSchema = new Schema({
     },
     onView: {
         type: Boolean,
-        required: true,
+        required: false
     },
-})
+    owner: {
+        // this is where we set up an objectId reference
+        // by declaring that as the type
+        type: Schema.Types.ObjectId,
+        // this line tells us which model to look at
+        ref: 'User'
+    },
+    comments: [commentSchema]
+}, 
+{ timestamps: true })
 
 const Object = model('Object', objectSchema)
 

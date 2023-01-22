@@ -1,6 +1,5 @@
 // dependencies
 const express = require('express')  
-// const morgan = require('morgan') 
 require('dotenv').config() 
 const path = require('path') 
 const middleware = require('./utils/middleware')
@@ -8,7 +7,7 @@ const middleware = require('./utils/middleware')
 // Import routes
 const ObjectRouter = require('./controllers/objectController')
 const UserRouter = require('./controllers/userController')
-
+const CommentRouter = require('./controllers/commentController')
 
 // express app object
 const app = express()
@@ -23,6 +22,7 @@ app.get('/', (req, res) => {
 
 app.use('/objects', ObjectRouter)
 app.use('/users', UserRouter)
+app.use('/comments', CommentRouter)
 
 
 
