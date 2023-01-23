@@ -1,6 +1,6 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-    <div class="container-sm">
+    <div class="container p-5">
         {%- comment -%}
         in a form, we have an action and a method.
         the action points to our url endpoint
@@ -9,10 +9,10 @@
         {%- endcomment -%}
         <form action="/users/login" method="POST">
             <fieldset>
-                <legend>Welcome back, please log in to continue</legend>
-                <label class="form-label">Username:</label>
+                <legend>Welcome back, please log in to continue.</legend>
+                <label class="form-label pt-3">Username:</label>
                 <input type="text" class="form-control" name="username" placeholder="username" required>
-                <label class="form-label">Password: </label>
+                <label class="form-label pt-3">Password: </label>
                 <input type="password" class="form-control" name="password" placeholder="password" required>
             </fieldset>
             <input type="submit" class="btn btn-success mt-3" value="Login">

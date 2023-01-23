@@ -42,8 +42,7 @@ const objectSchema = new Schema({
         required: false
     },
     onView: {
-        type: Boolean,
-        required: false
+        type: Boolean
     },
     owner: {
         // this is where we set up an objectId reference

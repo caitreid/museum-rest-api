@@ -1,27 +1,81 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-    <div class="container-sm">
+    <div class="container-sm p-5">
         <form action="/objects" method="POST">
-            <fieldset>
-                <legend>Create New object</legend>
-                <label class="form-label">Name:</label>
+        <fieldset>
+            <legend><b>Create New Object Record </b></legend>
+            <div class="py-2">
+                <label class="form-label">Title:</label>
                 <input 
                     type="text" class="form-control" 
-                    name="name" placeholder="What kind of object is it?"
-                    required
+                    name="title" placeholder="What kind of object is it?"
+                    required value="{{ object.title }}"
                 >
-                <label class="form-label">Color:</label>
+            </div>
+            <div class="py-2">
+                <label class="form-label">Description: </label>
                 <input 
-                    type="color" class="form-control" 
-                    name="color" placeholder="What color is the object?"
-                    required
+                    type="text" class="form-control " 
+                    name="description" placeholder="2-3 sentence description."
+                    required value="{{ object.description }}"
                 >
-                <label class="form-label">Ready to Eat:</label>
+            </div>
+            <div class="py-2">
+                <label class="form-label">Period: </label>
+                <input 
+                    type="text" class="form-control " 
+                    name="period" placeholder="Artistic period"
+                    required value="{{ object.period }}"
+                >
+            </div>
+            <div class="py-2">
+                <label class="form-label">Date: </label>
+                <input 
+                    type="text" class="form-control " 
+                    name="date" placeholder=""
+                    required value="{{ object.date }}"
+                >
+            </div>
+            <div class="py-2">
+                <label class="form-label">Culture: </label>
+                <input 
+                    type="text" class="form-control " 
+                    name="culture" placeholder=""
+                    required value="{{ object.culture }}"
+                >
+            </div>
+            <div class="py-2">
+                <label class="form-label">Medium: </label>
+                <input 
+                    type="text" class="form-control " 
+                    name="medium" placeholder=""
+                    required value="{{ object.medium }}"
+                >
+            </div>
+            <div class="py-2">
+                <label class="form-label">Classification: </label>
+                <input 
+                    type="text" class="form-control " 
+                    name="classification" placeholder=""
+                    required value="{{ object.classification }}"
+                >
+            </div>
+            <div class="py-2">
+                <label class="form-label">Image URL: </label>
+                <input 
+                    type="text" class="form-control " 
+                    name="image" placeholder=""
+                    required value="{{ object.image }}"
+                >
+            </div>
+            <div class="py-2">
+                <label class="form-label">On view: </label>
                 <input 
                     type="checkbox" class="form-check-control" 
-                    name="readyToEat"
+                    name="onView"
                 >
-            </fieldset>
+            </div>
+        </fieldset>
             <input type="submit" class="btn btn-success" value="Create New object">
         </form>
     </div>

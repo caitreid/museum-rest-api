@@ -43,7 +43,7 @@ router.get('/new', (req, res) => {
     res.render('objects/new', { ...req.session })
 })
 
-// CREATE route
+// CREATE 
 // Create -> receives a request body, and creates a new document in the database
 router.post('/', (req, res) => {
     // console.log('this is req.body before owner: \n', req.body)
@@ -57,9 +57,11 @@ router.post('/', (req, res) => {
     // we need to do a little js magic, to get our checkbox turned into a boolean
     // here we use a ternary operator to change the on value to send as true
     // otherwise, make that field false
-    req.body.readyToEat = req.body.readyToEat === 'on' ? true : false
+    req.body.onView = req.body.onView === 'on' ? true : false
+
     const newObject = req.body
     console.log('this is req.body aka newobject, after owner\n', newObject)
+
     Object.create(newObject)
         // send a 201 status, along with the json response of the new object
         .then(object => {
@@ -137,7 +139,7 @@ router.get('/edit/:id', (req, res) => {
 // Update -> updates a specific object(only if the object's owner is updating)
 router.put('/:id', (req, res) => {
     const id = req.params.id
-    req.body.readyToEat = req.body.readyToEat === 'on' ? true : false
+    req.body.onView = req.body.onView === 'on' ? true : false
     Object.findById(id)
         .then(object => {
             // if the owner of the object is the person who is logged in
