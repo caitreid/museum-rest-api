@@ -1,59 +1,119 @@
 {% layout 'layout.liquid' %}
 {% block content %}
-    <div class="container-md">
-        <article>
-            <h2>{{object.name}}</h2>
-            <h4>
-                {% if object.readyToEat %}
-                    Ripe and Ready
-                {% else %}
-                    Not Ripe! Do Not Eat!
-                {% endif %}
-            </h4>
-            <h4>The color of the object is: {{object.color}}</h4>
-            <div class="colorBox" style="background-color: {{object.color}}"></div>
-            {% if object.owner == userId %}
-                <hr>
-                <div class="btn-group">
-                    {%- comment -%}
-                    first button will take us to the edit page
-                    second will actually be a form, that calls our delete route
-                    {%- endcomment -%}
-                    <a href="/objects/edit/{{object.id}}" class="btn btn-primary">Edit {{object.name}}</a>
-                    <form action="/objects/{{object.id}}?_method=DELETE" method="POST">
-                        <input type="submit" class="btn btn-danger" value="Delete {{object.name}}">
-                    </form>
-                </div>
-            {% endif %}
-        </article>
+  <div class="container-md p-5">
+    <article>
+      <h2 class="py-2">{{ object.title }}</h2>
+      <div class="image py-3">
+        <img src="{{ object.image }}">
+      </div>
+    {% if object.description %}
+        <p>
+            <b>Description: </b>{{ object.description }}
+        </p>
+    {% endif %}
+    {% if object.period %}
+      <p>
+        <b>Period: </b>
+        {{ object.period }}
+      </p>
+    {% endif %}
+    {% if object.date %}
+      <p>
+        <b>Date: </b>
+        {{ object.date }}
+      </p>
+    {% endif %}
+    {% if object.culture %}
+      <p>
+        <b>Culture: </b>
+        {{ object.culture }}
+      </p>
+    {% endif %}
+    {% if object.medium %}
+      <p>
+        <b>Medium: </b>
+        {{ object.medium }}
+      </p>
+    {% endif %}
+    {% if object.classification %}
+      <p>
+        <b>Classification: </b>
+        {{ object.classification }}
+      </p>
+    {% endif %}
+    {% if object.owner %}
+      <p>
+        <b>Archeologist: </b>
+        {{ object.owner }}
+      </p>
+    {% endif %}
+    {% if object.onView %}
+        <p>
+            <b>
+                Object currently on view.
+            </b>
+            {% else %}
+            <b>
+                Object not currently on view.
+            </b>
+        </p>
+    {% endif %}
+    {%if loggedIn %}
+      {% if object.owner == userId %}
         <hr>
-        <h4>comments</h4>
+        <div class="btn-group">
+          {%- comment -%}
+          first button will take us to the edit page
+          second will actually be a form, that calls our delete route
+          {%- endcomment -%}
+          <a href="/objects/edit/{{object.id}}" class="btn btn-primary">Edit {{ object.title }}</a>
+          <form action="/objects/{{object.id}}?_method=DELETE" method="POST">
+            <input
+              type="submit"
+              class="btn btn-danger"
+              value="Delete {{object.name}}">
+          </form>
+        </div>
+      {% endif %}
+    {% endif %}
+    </article>
+    
+    <div class="comments mt-5">
+        <h4>Comments</h4>
         <hr>
         {% if loggedIn %}
-            <div class="col-md-6">
-                <form action="/comments/{{ object.id }}" method="POST">
-                    <fieldset>
-                        <legend>Add Comment</legend>
-                        <label class="form-label">comment: </label>
-                        <input type="text" name="note" class="form-control mb-1">
-                    </fieldset>
-                    <input type="submit" class="btn btn-success" value="add comment">
-                </form>
-            </div>
+        <div class="col-md-6">
+            <form action="/comments/{{ object.id }}" method="POST">
+            <fieldset>
+                <legend>Add Comment</legend>
+                <label class="form-label">Comment:
+                </label>
+                <input
+                type="text"
+                name="note"
+                class="form-control mb-1">
+            </fieldset>
+            <input
+                type="submit"
+                class="btn btn-success"
+                value="add comment">
+            </form>
+        </div>
         {% else %}
-            <div class="col-md-6">
-                <small>If you'd like to leave a comment, please log in...</small>
-            </div>
+        <div class="col-md-6">
+            <small>Login to leave comments.</small>
+        </div>
         {% endif %}
         <hr>
         {% if object.comments.length > 0 %}
-            <div class="container-sm justify-content-center">
-                {% for comm in object.comments %}
-                    {% render '../comment.liquid', comm: comm, userId: userId, object: object %}
-                {% endfor %}
-            </div>
+        <div class="container-sm justify-content-center">
+            {% for comm in object.comments %}
+            {% render '../comment.liquid', comm: comm, userId: userId, object: object %}
+            {% endfor %}
+        </div>
         {% else %}
-            <small>no comments yet...</small>
+        <small>no comments yet...</small>
         {% endif %}
     </div>
+  </div>
 {% endblock %}

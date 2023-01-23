@@ -1,9 +1,26 @@
-body {
+/* body {
     background-color: lightsteelblue;
+} */
+
+.home {
+    padding: 2rem;
 }
 
 .colorBox {
     height: 25px;
     width: 75%;
     border: .5px solid grey;
+}
+
+.image {
+    max-width:400px;
+    width:100%;
+}
+
+.image img {
+    width:inherit;
+}
+
+label{
+    font-weight: 600;
 }

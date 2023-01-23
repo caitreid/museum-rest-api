@@ -2,7 +2,7 @@
 //// Import Dependencies         ////
 /////////////////////////////////////
 const express = require('express') // import the express framework
-const morgan = require('morgan') // import the morgan request logger
+// const morgan = require('morgan') // import the morgan request logger
 require('dotenv').config() // Load my ENV file's variables
 const path = require('path') // import path module
 const ObjectRouter = require('./controllers/objectController')
